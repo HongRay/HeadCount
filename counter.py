@@ -12,7 +12,7 @@ with open('yolo-files/coco.names', 'r') as f:
     classes = [line.strip() for line in f.readlines()]
 
 # Start video stream
-stream = CamGear(source='https://www.youtube.com/watch?v=ooHmM4o1Z1Q', stream_mode=True, logging=True, ytdl_options={'format': 'worst'}).start()
+stream = CamGear(source='https://www.youtube.com/watch?v=KMJS66jBtVQ', stream_mode=True, logging=True, ytdl_options={'format': 'worst'}).start()
 
 frame_skip = 5  # Number of frames to skip for faster processing
 frame_count = 0  # Initialize frame counter
