@@ -12,13 +12,14 @@ with open('yolo-files/coco.names', 'r') as f:
     classes = [line.strip() for line in f.readlines()]
 
 # Start video stream
-stream = CamGear(source='https://www.youtube.com/watch?v=KMJS66jBtVQ', stream_mode=True, logging=True, ytdl_options={'format': 'worst'}).start()
+stream = CamGear(source='https://www.youtube.com/watch?v=eCucedzZT1A', stream_mode=True, logging=True, ytdl_options={'format': 'worst'}).start()
 
 frame_skip = 5  # Number of frames to skip for faster processing
 frame_count = 0  # Initialize frame counter
 
 while True:
     frame = stream.read()
+    frame = cv2.resize(frame, (1020, 600))
 
     if frame is None:
         print("Frame is None, exiting.")
@@ -71,16 +72,25 @@ while True:
     # Perform Non-Maximum Suppression to remove overlapping bounding boxes
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.3)
 
+    # Initialize the person counter
+    person_counter = 0
+
     # Draw bounding boxes and labels for "person"
     font = cv2.FONT_HERSHEY_PLAIN
     for i in range(len(boxes)):
-        if i in indexes:
+        if i in indexes and class_ids[i] == 0:  # Check if the detected object is a person
             x, y, w, h = boxes[i]
             label = str(classes[class_ids[i]])  # "person"
             confidence_label = f"{label} {confidences[i]:.2f}"
             color = (0, 255, 0)  # Green color for bounding box
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 3)
             cv2.putText(frame, confidence_label, (x, y - 10), font, 1, color, 2)
+
+            # Increment person counter for each detected person
+            person_counter += 1
+
+    # Display the person counter on the frame
+    cv2.putText(frame, f"Persons: {person_counter}", (50, 60), cv2.FONT_HERSHEY_COMPLEX, 3, (0, 128, 0), 3)
 
     # Display the frame with bounding boxes
     cv2.imshow("FRAME", frame)
