@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Card, CardBody } from "@nextui-org/react";
 import "./globals.css";
 
+// Import custom fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -29,12 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-          <Card className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-            <CardBody className="bg-white p-8 rounded-md shadow-md text-center w-full sm:w-96">
-              {children}
-            </CardBody>
-          </Card>
+        {/* Flexbox to center content */}
+        <div className="flex items-center justify-center min-h-screen p-8">
+          {/* This renders the children, e.g., Login component */}
+          {children}
         </div>
       </body>
     </html>
