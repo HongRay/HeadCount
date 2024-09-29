@@ -9,10 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        customOrange: '#ffefd5',    // PapayaWhip
+        customYellow: '#fffacd',    // LemonChiffon
+        customReddishBrown: '#8b4513', // SaddleBrown
+        darkCustomOrange: '#ff8c00', // DarkOrange for dark mode
+        darkCustomYellow: '#ffd700', // Gold for dark mode
+        darkCustomReddishBrown: '#8b0000', // DarkRed for dark mode
+      },
+      backgroundImage: {
+        'dashboardbg': "url('/images/sunhack-background-image.png')",
       },
     },
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
 };
