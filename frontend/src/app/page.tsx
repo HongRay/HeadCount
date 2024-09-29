@@ -15,7 +15,7 @@ export default function Login() {
 
   // Immediate login check
   const loginCheck = (email: string, password: string) => {
-    if (email === "admin@gmail.com" && password === "password") {
+    if (email === "stan28@asu.edu" && password === "password") {
       return { success: true };
     } else {
       return {
