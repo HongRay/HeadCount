@@ -22,7 +22,9 @@ export default function Settings() {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
-  const handleSaveSettings = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveSettings = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     // Validate maxOccupancy before saving

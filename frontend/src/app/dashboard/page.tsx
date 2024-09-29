@@ -4,12 +4,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Dashboard() {
-  const [maxOccupancy] = useState<number>(50); // Placeholder max occupancy
+  const [maxOccupancy, setMaxOccupancy] = useState<number>(50); 
   const [currentOccupancy, setCurrentOccupancy] = useState<number>(0);
   const [occupancyRate, setOccupancyRate] = useState<number>(0);
 
+  // Retrieve maxOccupancy from local storage when component mounts
   useEffect(() => {
-    //Fetch current occupancy from video
+    const savedMaxOccupancy = localStorage.getItem('maxOccupancy');
+    if (savedMaxOccupancy) {
+      setMaxOccupancy(parseInt(savedMaxOccupancy, 10));
+    }
+  }, []); 
+
+  // Fetch occupancy data from the API
+  useEffect(() => {
     const fetchOccupancy = async () => {
       try {
         const response = await axios.get(
@@ -23,15 +31,12 @@ export default function Dashboard() {
     };
 
     fetchOccupancy();
-    // Set interval to fetch occupancy periodically (every 5 seconds)
     const intervalId = setInterval(fetchOccupancy, 2000);
-
-    // Cleanup the interval when component unmounts
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId); 
   }, []);
 
   useEffect(() => {
-    // Calculate occupancy rate (current / max * 100)
+    // Calculate occupancy rate
     if (maxOccupancy > 0) {
       setOccupancyRate(
         parseFloat(((currentOccupancy / maxOccupancy) * 100).toFixed(2))
