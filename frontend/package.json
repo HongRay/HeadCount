@@ -15,10 +15,12 @@
     "qrcode.react": "^4.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-qrcode-logo": "^3.0.0",
     "react-webcam": "^7.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/qrcode.react": "^1.0.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
