@@ -13,6 +13,7 @@ import {
   CardBody,
 } from "@nextui-org/react";
 import Logo from '../../../public/images/logo.png';
+import axios from "axios";
 
 export default function Settings() {
   const [maxOccupancy, setMaxOccupancy] = useState(0);
@@ -22,7 +23,7 @@ export default function Settings() {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
-  const handleSaveSettings = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveSettings = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Validate maxOccupancy before saving
@@ -37,11 +38,25 @@ export default function Settings() {
     // Store settings (example using local storage)
     localStorage.setItem('maxOccupancy', maxOccupancy.toString());
     localStorage.setItem('selectedFeedType', selectedFeedType);
-    if (selectedFeedType === 'prerecorded') {
-      localStorage.setItem('youtubeURL', youtubeURL);
-    }
 
-    router.push('/dashboard');
+    if (selectedFeedType === 'live') {
+      router.push('/dashboard'); 
+    } else {
+      router.push('/video_dashboard'); 
+      localStorage.setItem('youtubeURL', youtubeURL);
+
+      try {
+        await axios.post("http://localhost:8000/process_feed", {
+          url: youtubeURL
+        });
+        alert("Video URL successfully sent to the backend")
+      } catch (error) {
+        console.error("Error sending video URL: ", error);
+        alert("Failed to send video URL to backend")
+      }
+
+      
+    }
   };
 
   const handleMaxOccupancyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +88,7 @@ export default function Settings() {
           <b></b>
           <div className="w-full">
           <label className="block text-sm font-medium mb-2 text-left">
-              Enter maximum oppcupancy:
+              Enter maximum occupancy:
             </label>
           <Input
             label="Max Occupancy"
