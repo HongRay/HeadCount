@@ -29,7 +29,7 @@ body {
 }
 
 body { 
-  background-image: url('/your-image.jpg'); 
+  background-image: url('../../public/images/sunhack-background-image.png'); 
   background-size: cover; 
   background-repeat: no-repeat; 
 }

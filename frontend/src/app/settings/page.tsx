@@ -13,7 +13,7 @@ export default function Settings() {
   const [maxOccupancy, setMaxOccupancy] = useState(50); 
   const [selectedWebcam, setSelectedWebcam] = useState("default"); 
 
-  const handleSaveSettings = (event) => {
+  const handleSaveSettings = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alert(`Settings saved! Max Occupancy: ${maxOccupancy}, Webcam: ${selectedWebcam}`);
   };
