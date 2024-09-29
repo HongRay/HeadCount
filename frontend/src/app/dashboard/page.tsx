@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import {Button, ButtonGroup} from "@nextui-org/button";
+import Link from 'next/link';
 
 export default function Dashboard() {
   //Get from setting page
@@ -51,6 +53,13 @@ export default function Dashboard() {
           <h3 className="text-xl mb-4">Current Occupancy: {currentOccupancy}</h3>
           <h3 className="text-xl mb-4">Available Entries: {availableEntries}</h3>
           <h3 className="text-xl mb-4">Occupancy Rate: {occupancyRate}%</h3>
+          <div className="flex flex-wrap gap-4 items-center">
+            <Link href="/settings">
+              <Button color="default" variant="ghost">
+                  Back
+              </Button>
+            </Link>
+          </div>
           {currentOccupancy > maxOccupancy && (
             <h3 className="text-xl text-red-500">⚠️ Occupancy exceeded!</h3>
           )}
