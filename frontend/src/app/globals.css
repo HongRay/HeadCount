@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light Mode Colors */
+:root {
+  --background: #ffefd5; /* PapayaWhip (Light Orange/Yellow) */
+  --foreground: #8b4513; /* SaddleBrown (Reddish Brown) */
+}
+
+/* Dark Mode Colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #8b4513; /* SaddleBrown as Dark Background */
+    --foreground: #ffefd5; /* PapayaWhip as Dark Text */
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body { 
+  background-image: url('../../public/background.jpg'); 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+}

@@ -1,10 +1,7 @@
-backend/yolo-files/
-backend/.venv/
-frontend/node_modules/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-frontend/node_modules
+/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -13,8 +10,8 @@ frontend/node_modules
 /coverage
 
 # next.js
-frontend/.next/
- /out/
+/.next/
+/out/
 
 # production
 /build
@@ -38,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-frontend/package-lock.json
+/package-lock.json
