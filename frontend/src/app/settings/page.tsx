@@ -7,69 +7,108 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-} from "@nextui-org/react"; 
+  Input,
+} from "@nextui-org/react";
 
 export default function Settings() {
-  const [maxOccupancy, setMaxOccupancy] = useState(50); 
-  const [selectedWebcam, setSelectedWebcam] = useState("default"); 
+  const [maxOccupancy, setMaxOccupancy] = useState(0);
+  const [selectedWebcam, setSelectedWebcam] = useState("default");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSaveSettings = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    alert(`Settings saved! Max Occupancy: ${maxOccupancy}, Webcam: ${selectedWebcam}`);
+
+    // Validate maxOccupancy before saving
+    if (maxOccupancy < 0) {
+      setErrorMessage("Max Occupancy cannot be less than 0");
+      return;
+    }
+
+    // If validation passes, reset error message and proceed
+    setErrorMessage("");
+    alert(
+      `Settings saved! Max Occupancy: ${maxOccupancy}, Webcam: ${selectedWebcam}`
+    );
+  };
+
+  const handleMaxOccupancyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value >= 0) {
+      setMaxOccupancy(value);
+      setErrorMessage(""); // Clear error message if valid
+    } else {
+      setErrorMessage("Max Occupancy cannot be less than 0");
+    }
   };
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1 className="text-3xl font-bold">Settings</h1>
+    <>
+      <h1 className="text-3xl font-bold text-center">Settings</h1>
 
-        <form
-          onSubmit={handleSaveSettings}
-          className="flex flex-col gap-4 items-center sm:items-start w-full"
-        >
-          <label className="w-full">
-            <span className="block text-sm font-medium">Max Occupancy</span>
-            <input
-              type="number"
-              value={maxOccupancy}
-              onChange={(e) => setMaxOccupancy(Number(e.target.value))}
-              className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Set Max Occupancy"
-              required
-            />
+      <form
+        onSubmit={handleSaveSettings}
+        className="flex flex-col gap-4 items-center justify-center sm:items-start w-full"
+      >
+        {/* Max Occupancy Input */}
+        <Input
+          label="Max Occupancy"
+          type="number"
+          value={maxOccupancy.toString()} // Convert number to string
+          onChange={handleMaxOccupancyChange} // Use custom handler
+          className="mt-1 p-2 w-full"
+          min={0} // HTML validation for minimum value
+          required
+        />
+
+        {/* Error Message */}
+        {errorMessage && (
+          <p className="text-red-500 text-sm mt-1 text-center">
+            {errorMessage}
+          </p>
+        )}
+
+        {/* Centralized Webcam Selection Dropdown */}
+        <div className="w-full">
+          <label className="block text-sm font-medium mb-2 text-center">
+            Please select your preferred webcam:
           </label>
-
-          <label className="w-full">
-            <span className="block text-sm font-medium">Select Webcam</span>
+          <div className="flex justify-center">
             <Dropdown>
               <DropdownTrigger>
-              <button className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring focus:border-blue-300 text-left">
-                  {selectedWebcam === "default" ? "Click to select" : selectedWebcam}
-                </button>
+                <Button variant="bordered" className="w-full">
+                  {selectedWebcam === "default"
+                    ? "Select Webcam"
+                    : selectedWebcam}
+                </Button>
               </DropdownTrigger>
               <DropdownMenu
-                aria-label="Select Live Source"
+                aria-label="Select Webcam"
+                disallowEmptySelection
+                selectionMode="single"
+                variant="flat"
                 onAction={(key) => setSelectedWebcam(key.toString())}
-                className="bg-white custom-dropdown-menu" // Add this line to set the background color of the dropdown menu
+                className="dropdown-width"
               >
-                <DropdownItem key="default">
-                  <span className="w-full">Same as System</span> {/* Apply text-left to a span within the item */}
-                </DropdownItem>
-                <DropdownItem key="webcam1">
-                  <span className="w-full">FaceTime HD Camera</span> {/* Apply text-left to a span within the item */}
-                </DropdownItem>
+                <DropdownItem key="default">Same as System</DropdownItem>
+                <DropdownItem key="webcam1">FaceTime HD Camera</DropdownItem>
+                <DropdownItem key="webcam2">Logitech 4K Pro</DropdownItem>
+                <DropdownItem key="webcam3">External USB Webcam</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-          </label>
+          </div>
+        </div>
 
-          <Button
-            type="submit"
-            className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Start
-          </Button>
-        </form>
-      </main>
-    </div>
+        {/* Save Button */}
+        <Button type="submit" className="mt-6 px-4 py-2 w-full" color="warning">
+          Start
+        </Button>
+      </form>
+
+      <style jsx>{`
+        .dropdown-width {
+          width: 100%;
+        }
+      `}</style>
+    </>
   );
 }
