@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from 'next/navigation';
+import { Button } from "@nextui-org/react";
 
 export default function Dashboard() {
   const [maxOccupancy, setMaxOccupancy] = useState<number>(50); 
   const [currentOccupancy, setCurrentOccupancy] = useState<number>(0);
   const [occupancyRate, setOccupancyRate] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     // Retrieve maxOccupancy from local storage on component mount
@@ -66,7 +69,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats - takes 1/4 width on large screens */}
-        <div className="w-full lg:w-1/4 bg-orange-300 shadow-lg rounded-lg p-8">
+        <div className="w-full lg:w-2/5 bg-white shadow-lg rounded-lg p-8">
           <h3 className="text-xl mb-4">Max Occupancy: {maxOccupancy}</h3>
           <h3 className="text-xl mb-4">
             Current Occupancy: {currentOccupancy}
@@ -78,6 +81,13 @@ export default function Dashboard() {
           {currentOccupancy > maxOccupancy && (
             <h3 className="text-xl text-red-500">⚠️ Occupancy exceeded!</h3>
           )}
+                    <Button
+            className="mt-4 w-full" 
+            onClick={() => router.push('/settings')}
+            color="warning"
+          >
+            Back to Settings
+          </Button>
         </div>
       </div>
     </div>

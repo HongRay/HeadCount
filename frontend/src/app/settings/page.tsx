@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import {
   Dropdown,
@@ -39,11 +40,27 @@ export default function Settings() {
     // Store settings (example using local storage)
     localStorage.setItem("maxOccupancy", maxOccupancy.toString());
     localStorage.setItem("selectedFeedType", selectedFeedType);
-    if (selectedFeedType === "prerecorded") {
+
+
+    if (selectedFeedType === 'live') {
+      router.push('/dashboard');
+    } else {
+      router.push('/video_dashboard');
       localStorage.setItem("youtubeURL", youtubeURL);
+
+      try {
+        // Send the YouTube URL to the backend if feed type is prerecorded
+        await axios.post("http://localhost:8000/process_feed", {
+          url: youtubeURL,
+        });
+
+        alert("Video URL successfully sent to the backend!");
+      } catch (error) {
+        console.error("Error sending video URL:", error);
+        alert("Failed to send video URL to the backend.");
+      }
     }
 
-    router.push("/dashboard");
   };
 
   const handleMaxOccupancyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
