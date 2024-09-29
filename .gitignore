@@ -4,7 +4,7 @@ frontend/node_modules/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+frontend/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -13,7 +13,7 @@ frontend/node_modules/
 /coverage
 
 # next.js
-/.next/
+frontend/.next/
  /out/
 
 # production
@@ -38,4 +38,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/package-lock.json
+frontend/package-lock.json

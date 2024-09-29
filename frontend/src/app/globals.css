@@ -25,3 +25,9 @@ body {
     text-wrap: balance;
   }
 }
+
+body { 
+  background-image: url('/your-image.jpg'); 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+}
