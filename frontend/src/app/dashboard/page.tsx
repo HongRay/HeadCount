@@ -59,7 +59,7 @@ export default function Dashboard() {
         {/* Video Feed - takes 3/4 width on large screens */}
         <div className="w-full lg:w-3/4 flex justify-center items-center p-4">
           <iframe
-            className="rounded-lg border-2 border-orange-300 shadow-md w-full h-[600px]"
+            className="rounded-lg border-2 border-orange-300 shadow-md w-[960px] h-[540px]"
             src="http://localhost:8000/live_feed"
             allowFullScreen
             frameBorder="0"
