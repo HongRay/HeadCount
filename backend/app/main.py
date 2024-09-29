@@ -15,6 +15,14 @@ net, output_layers, classes = load_yolo_model()
 class VideoURLRequest(BaseModel):
     url: str
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the HeadCount API!"}
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
 # Endpoint 1: Return video stream
 @app.get("/videoFeed")
 async def video_feed():
