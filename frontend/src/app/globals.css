@@ -4,13 +4,8 @@
 
 /* Light Mode Colors */
 :root {
-<<<<<<< HEAD
-  --background: #ffffff;
-  --foreground: #000000; /* Changed to black */
-=======
   --background: #ffefd5; /* PapayaWhip (Light Orange/Yellow) */
   --foreground: #8b4513; /* SaddleBrown (Reddish Brown) */
->>>>>>> main
 }
 
 /* Dark Mode Colors */
@@ -34,7 +29,7 @@ body {
 }
 
 body { 
-  background-image: url('/your-image.jpg'); 
+  background-image: url('../../public/background.jpg'); 
   background-size: cover; 
   background-repeat: no-repeat; 
 }
