@@ -51,10 +51,10 @@ export default function Dashboard() {
         <div className="w-3/4 flex justify-center items-center p-4">
           <iframe
               className="rounded-lg border-2 border-orange-300 shadow-md w-full h-[600px]"
-              src="http://localhost:8000/live_feed"
+              src="http://localhost:8000/video_feed"
               allowFullScreen
               frameBorder="0"
-              title="Live Feed"
+              title="Video Feed"
             />
         </div>
 
