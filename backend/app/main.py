@@ -26,8 +26,7 @@ class VideoURLRequest(BaseModel):
 
 # Global variables to store the video URL and person counters
 video_url_storage = None
-current_person_count_video = 0  # Global person counter for video feed
-current_person_count_live = 0  # Global person counter for live feed (webcam)
+current_person_count = 0  # Global person counter for video feed
 
 # Load YOLOv4-tiny for faster performance
 net = cv2.dnn.readNet('yolo-files/yolov4.weights', 'yolo-files/yolov4.cfg')
@@ -40,7 +39,7 @@ with open('yolo-files/coco.names', 'r') as f:
 
 #-------------------------------------------- WEBCAM -------------------------------------------
 def generate_webcam_feed():
-    global current_person_count_live
+    global current_person_count
     cap = cv2.VideoCapture(0)  # Use webcam
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # Set width to 1280 pixels
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)  # Set height to 720 pixels
@@ -103,7 +102,7 @@ def generate_webcam_feed():
                     person_counter += 1
 
         # Update the global person counter for live feed
-        current_person_count_live = person_counter
+        current_person_count = person_counter
 
         # Overlay the person counter
         cv2.putText(frame, f"People Detected: {person_counter}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
@@ -119,7 +118,7 @@ def generate_webcam_feed():
 
 #-------------------------------------------- VIDEO -------------------------------------------
 def generate_video_feed():
-    global current_person_count_video
+    global current_person_count
     stream = CamGear(source=video_url_storage, stream_mode=True, logging=True).start()
     frame_count = 0
 
@@ -177,7 +176,7 @@ def generate_video_feed():
                     person_counter += 1
 
         # Update the global person counter for video feed
-        current_person_count_video = person_counter
+        current_person_count = person_counter
         
         cv2.putText(frame, f"People Detected: {person_counter}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
@@ -224,9 +223,9 @@ async def count_people(source: str):
     if source == "video":
         if not video_url_storage:
             return {"error": "No video URL is stored. Please upload a video URL first."}
-        return {"person_count": current_person_count_video}
+        return {"person_count": current_person_count}
     elif source == "live":
-        return {"person_count": current_person_count_live}
+        return {"person_count": current_person_count}
     else:
         return {"error": "Invalid source. Use 'video' or 'live' as the source parameter."}
 
