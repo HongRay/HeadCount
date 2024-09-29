@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import {
   Dropdown,
   DropdownTrigger,
@@ -12,18 +12,19 @@ import {
   Card,
   CardBody,
 } from "@nextui-org/react";
-import Logo from '../../../public/images/logo.png';
-import axios from "axios";
+import Image from "next/image";
 
 export default function Settings() {
   const [maxOccupancy, setMaxOccupancy] = useState(0);
-  const [selectedFeedType, setSelectedFeedType] = useState('live');
+  const [selectedFeedType, setSelectedFeedType] = useState("live");
   const [selectedWebcam, setSelectedWebcam] = useState("default");
-  const [youtubeURL, setYoutubeURL] = useState('');
+  const [youtubeURL, setYoutubeURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
-  const handleSaveSettings = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveSettings = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     // Validate maxOccupancy before saving
@@ -36,27 +37,13 @@ export default function Settings() {
     setErrorMessage("");
 
     // Store settings (example using local storage)
-    localStorage.setItem('maxOccupancy', maxOccupancy.toString());
-    localStorage.setItem('selectedFeedType', selectedFeedType);
-
-    if (selectedFeedType === 'live') {
-      router.push('/dashboard'); 
-    } else {
-      router.push('/video_dashboard'); 
-      localStorage.setItem('youtubeURL', youtubeURL);
-
-      try {
-        await axios.post("http://localhost:8000/process_feed", {
-          url: youtubeURL
-        });
-        alert("Video URL successfully sent to the backend")
-      } catch (error) {
-        console.error("Error sending video URL: ", error);
-        alert("Failed to send video URL to backend")
-      }
-
-      
+    localStorage.setItem("maxOccupancy", maxOccupancy.toString());
+    localStorage.setItem("selectedFeedType", selectedFeedType);
+    if (selectedFeedType === "prerecorded") {
+      localStorage.setItem("youtubeURL", youtubeURL);
     }
+
+    router.push("/dashboard");
   };
 
   const handleMaxOccupancyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,10 +59,12 @@ export default function Settings() {
   return (
     <Card className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
       <CardBody className="bg-white p-8 rounded-md shadow-md text-center w-full sm:w-96">
-        <img
-          src={Logo.src}
-          alt="HeadCount Logo"
-          className="mx-auto h-12 w-auto mb-4"
+        <Image
+          src="/images/logo.png"
+          alt="HeadCount"
+          width={96}
+          height={96}
+          className="mx-auto h-24 w-auto"
         />
 
         <h1 className="text-3xl font-bold text-center">Settings</h1>
@@ -87,18 +76,18 @@ export default function Settings() {
           {/* Max Occupancy Input */}
           <b></b>
           <div className="w-full">
-          <label className="block text-sm font-medium mb-2 text-left">
+            <label className="block text-sm font-medium mb-2 text-left">
               Enter maximum occupancy:
             </label>
-          <Input
-            label="Max Occupancy"
-            type="number"
-            value={maxOccupancy.toString()} 
-            onChange={handleMaxOccupancyChange}
-            className="mt-1 p-2 w-full"
-            min={0} 
-            required
-          />
+            <Input
+              label="Max Occupancy"
+              type="number"
+              value={maxOccupancy.toString()}
+              onChange={handleMaxOccupancyChange}
+              className="mt-1 p-2 w-full"
+              min={0}
+              required
+            />
           </div>
 
           {/* Error Message */}
@@ -117,7 +106,9 @@ export default function Settings() {
               <Dropdown>
                 <DropdownTrigger>
                   <Button variant="bordered" className="w-full">
-                    {selectedFeedType === 'live' ? "Live Feed" : "Pre-recorded Feed"}
+                    {selectedFeedType === "live"
+                      ? "Live Feed"
+                      : "Pre-recorded Feed"}
                   </Button>
                 </DropdownTrigger>
                 <DropdownMenu
@@ -129,14 +120,16 @@ export default function Settings() {
                   className="dropdown-width"
                 >
                   <DropdownItem key="live">Live Feed</DropdownItem>
-                  <DropdownItem key="prerecorded">Pre-recorded Feed</DropdownItem>
+                  <DropdownItem key="prerecorded">
+                    Pre-recorded Feed
+                  </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </div>
           </div>
 
           {/* Conditionally Render Live Feed Webcam Dropdown */}
-          {selectedFeedType === 'live' && (
+          {selectedFeedType === "live" && (
             <div className="w-full">
               <label className="block text-sm font-medium mb-2 text-left">
                 Please select your preferred webcam:
@@ -159,7 +152,9 @@ export default function Settings() {
                     className="dropdown-width"
                   >
                     <DropdownItem key="default">Same as System</DropdownItem>
-                    <DropdownItem key="webcam1">FaceTime HD Camera</DropdownItem>
+                    <DropdownItem key="webcam1">
+                      FaceTime HD Camera
+                    </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </div>
@@ -167,9 +162,12 @@ export default function Settings() {
           )}
 
           {/* Conditionally Render YouTube URL Input */}
-          {selectedFeedType === 'prerecorded' && (
+          {selectedFeedType === "prerecorded" && (
             <div className="w-full">
-              <label htmlFor="youtubeURL" className="block text-sm font-medium text-left mb-1 ">
+              <label
+                htmlFor="youtubeURL"
+                className="block text-sm font-medium text-left mb-1 "
+              >
                 YouTube URL
               </label>
               {/* Styled YouTube URL Input */}
@@ -182,8 +180,8 @@ export default function Settings() {
                 placeholder="Enter YouTube video URL"
                 required
                 classNames={{
-                  inputWrapper: 'input-wrapper-styles',
-                  input: 'input-styles'
+                  inputWrapper: "input-wrapper-styles",
+                  input: "input-styles",
                 }}
               />
             </div>
@@ -204,10 +202,10 @@ export default function Settings() {
             width: 100%;
           }
           .input-wrapper-styles {
-            @apply mt-1; 
+            @apply mt-1;
           }
           .input-styles {
-            @apply p-2 border rounded focus:outline-none focus:ring focus:border-blue-300; 
+            @apply p-2 border rounded focus:outline-none focus:ring focus:border-blue-300;
           }
         `}</style>
       </CardBody>
