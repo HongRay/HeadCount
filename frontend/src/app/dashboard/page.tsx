@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Webcam from 'react-webcam';
 import axios from 'axios';
 
 export default function Dashboard() {
@@ -14,20 +13,28 @@ export default function Dashboard() {
     //Fetch curent occupancy from video
     const fetchOccupancy = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/current_occupancy');
-        setCurrentOccupancy(response.data.currentOccupancy || 0);
+        const response = await axios.get('http://localhost:8000/countPeople?source=live');
+        console.log('API response:', response.data); 
+        setCurrentOccupancy(response.data.person_count || 0);
       } catch (error) {
         console.error('Error fetching occupancy:', error);
       }
     };
 
     fetchOccupancy();
+    
+    // Set interval to fetch occupancy periodically (every 5 seconds)
+    const intervalId = setInterval(fetchOccupancy, 2000);
+
+    // Cleanup the interval when component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     // Calculate occupancy rate (current / max * 100)
     if (maxOccupancy > 0) {
       setOccupancyRate(parseFloat(((currentOccupancy / maxOccupancy) * 100).toFixed(2)));
+      console.log('Current Occupancy:', currentOccupancy); 
     }
   }, [currentOccupancy, maxOccupancy]);
 
@@ -42,7 +49,13 @@ export default function Dashboard() {
       <div className="flex w-4/5">
         {/* Webcam - 3/4 of the width */}
         <div className="w-3/4 flex justify-center items-center p-4">
-          <Webcam className="rounded-lg border-2 border-orange-300 shadow-md w-full h-auto" />
+          <iframe
+              className="rounded-lg border-2 border-orange-300 shadow-md w-full h-[600px]"
+              src="http://localhost:8000/live_feed"
+              allowFullScreen
+              frameBorder="0"
+              title="Live Feed"
+            />
         </div>
 
         {/* Stats - 1/4 of the width */}

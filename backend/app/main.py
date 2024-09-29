@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import cv2
 import numpy as np
 from starlette.responses import StreamingResponse
@@ -6,6 +7,18 @@ from vidgear.gears import CamGear
 from pydantic import BaseModel
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",  # Your React frontend
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define a model for video URL input
 class VideoURLRequest(BaseModel):
