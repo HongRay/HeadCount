@@ -74,9 +74,9 @@ export default function Login() {
         <Image
           src="/images/logo.png"
           alt="HeadCount"
-          width={48}
-          height={48}
-          className="mx-auto h-12 w-auto"
+          width={96}
+          height={96}
+          className="mx-auto h-24 w-auto"
         />
         <h1 className="text-2xl font-bold mt-4">Sign in to HeadCount</h1>
         <p className="text-gray-500 text-sm mt-2">
