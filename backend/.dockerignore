@@ -1,0 +1,22 @@
+# Ignore the virtual environment
+.venv/
+venv/
+
+# Ignore the YOLO model files if they are large and not needed in the image
+yolo-files/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore the .git directory and any local development artifacts
+.git/
+.gitignore
+
+# Ignore any temporary files or directories created by the editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend # Point to the backend directory
+      dockerfile: Dockerfile
+    container_name: backend_service
+    ports:
+      - "8000:8000" # Expose the backend API on port 8000
+    volumes:
+      - ./backend:/app # Mount the backend code for live reloads
+    environment:
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
