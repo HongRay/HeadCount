@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,27 +19,3 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
-=======
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-body {
-  background-image: url("../../public/background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
->>>>>>> main
