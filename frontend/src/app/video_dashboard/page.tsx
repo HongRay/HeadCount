@@ -4,9 +4,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Dashboard() {
-  const [maxOccupancy] = useState<number>(50);
+  const [maxOccupancy, setMaxOccupancy] = useState<number>(50); 
   const [currentOccupancy, setCurrentOccupancy] = useState<number>(0);
   const [occupancyRate, setOccupancyRate] = useState<number>(0);
+
+  useEffect(() => {
+    // Retrieve maxOccupancy from local storage on component mount
+    const savedMaxOccupancy = localStorage.getItem('maxOccupancy');
+    if (savedMaxOccupancy) {
+      setMaxOccupancy(parseInt(savedMaxOccupancy, 10));
+    }
+  }, []);
 
   // Fetch occupancy data from the API
   useEffect(() => {
