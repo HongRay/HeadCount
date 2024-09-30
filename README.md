@@ -1,6 +1,6 @@
 # **HeadCount**
 
-This project is a web-based application for managing and monitoring occupancy in real-time. It uses a combination of **React (Next.js)** for the frontend and **FastAPI** for the backend to provide real-time occupancy data, live video feed monitoring, and access control. It includes user authentication and settings customization for the system.
+This project is a web-based application for managing and monitoring occupancy in real-time using machine learning. It uses a combination of **React (Next.js)** for the front end and **FastAPI** for the back end to provide real-time occupancy data, live video feed monitoring, and access control. The system includes user authentication and settings customization.
 
 ## Table of Contents
 
@@ -17,6 +17,7 @@ This project is a web-based application for managing and monitoring occupancy in
 
 - **Real-time Occupancy Tracking**: Monitors and updates the current occupancy with an alert when capacity is exceeded.
 - **Live Video Feed**: Displays a live video feed from a connected webcam or video stream.
+- **Computer vision**: Identify and count people in the video/live feed from the webcam using machine-learning.
 - **User Authentication**: Users need to log in to access the dashboard and settings.
 - **Settings Customization**: Administrators can set occupancy limits and configure the local webcam from the settings page.
 - **Responsive UI**: The frontend is fully responsive, ensuring it works seamlessly across devices.
@@ -34,7 +35,7 @@ This project is a web-based application for managing and monitoring occupancy in
 ### Backend
 
 - **FastAPI**: Python web framework to handle API requests and serve the live video feed.
-- **OpenCV**: For real-time computer vision tasks such as object detection and live video feed processing.
+- **OpenCV**: For real-time computer vision tasks such as object detection and live video feed processing using YOlOv4.
 - **CORS Middleware**: To handle Cross-Origin Resource Sharing between frontend and backend.
 
 ## Setup Instructions
